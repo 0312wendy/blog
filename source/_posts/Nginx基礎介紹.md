@@ -27,7 +27,7 @@ tags:
 
 安裝完成畫面
 
-![](Nginx基礎介紹/welcome.png)
+![](Nginx基礎介紹/nginx1.png)
 
 #### 映射網頁目錄 
 因為網頁文件都放在容器裡，無法直接修改，顯然很不方便，
@@ -61,3 +61,6 @@ tags:
 接著，就可以把子目錄html，映射到容器的網頁文件目錄/usr/share/nginx/html裡了
         
         docker run -d -p 7777:80 --name nginx-server -v "$PWD/html":/usr/share/nginx/html nginx
+打開瀏覽器，就可以看到我們輸入的內容了
+
+![](Nginx基礎介紹/nginx2.png)
