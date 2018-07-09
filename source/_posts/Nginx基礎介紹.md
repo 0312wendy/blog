@@ -18,8 +18,46 @@ tags:
 
 #### 安裝Nginx
 
-    docker run -d -p 7777:80 --name nginx-server nginx
+   使用docker安裝
+       
+       docker run -d -p 7777:80 --name nginx-server nginx
+查看容器是否運行
+    
+       docker ps -a
 
 安裝完成畫面
 
 ![](Nginx基礎介紹/welcome.png)
+
+#### 映射網頁目錄 
+因為網頁文件都放在容器裡，無法直接修改，顯然很不方便，
+因此可將網頁文件所在的目錄/usr/share/nginx/html映射到本地
+
+首先，新建一個目錄，並進入該目錄
+ 
+       mkdir nginx-docker
+       cd nginx-docker
+在該目錄底下新建一個html子目錄
+      
+       mkdir html
+
+並在此目錄底下建置一個index.html文件，內容如下:
+
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        </head>
+        <body>
+            <h1>Hi Nginx Docker</h1>
+        </body>
+    </html>
+
+將原本的容器停止並刪除後，到剛剛建置的資料夾底下
+        
+        cd nginx-docker
+接著，就可以把子目錄html，映射到容器的網頁文件目錄/usr/share/nginx/html裡了
+        
+        docker run -d -p 7777:80 --name nginx-server -v "$PWD/html":/usr/share/nginx/html nginx
