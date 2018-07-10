@@ -66,8 +66,18 @@ tags:
 ![](Nginx基礎介紹/nginx2.png)
 
 #### 修改Nginx的配置文件
-因為還要修改Nginx容器內的設定檔，因此可以將容器內的Nginx設定檔拷貝到本機以方便作業，
+因為還要修改Nginx容器內的設定檔，可以將容器內的Nginx設定檔拷貝到本機以方便作業，
 以下指令為將nginx-server容器的(自行命名的容器名稱)/etc/nginx拷貝到當前目錄，最後面的點不能省略
 
         docker cp nginx-server:/etc/nginx .
-執行完成後，會看到目錄底下
+執行完成後，會看到當前目錄底下多出一個nginx子目錄
+
+![](Nginx基礎介紹/nginx3.png)
+
+名稱改為conf以利日後辨識
+
+        mv nginx conf
+
+再來將前一個建置的容器停止運行並刪除，重新運行一個新的容器，這次不只映射了網頁目錄，還映射了設定目錄
+
+        docker run -d -p 7777:80 --name nginx-server -v "$PWD/html":/usr/share/nginx/html -v "$PWD/conf":/etc/nginx nginx
