@@ -65,7 +65,7 @@ tags:
 
 ![](Nginx基礎介紹/nginx2.png)
 
-#### 修改Nginx的配置文件
+#### 修改Nginx的設定檔
 因為還要修改Nginx容器內的設定檔，可以將容器內的Nginx設定檔拷貝到本機以方便作業，
 以下指令為將nginx-server容器的(自行命名的容器名稱)/etc/nginx拷貝到當前目錄，最後面的點不能省略
 
@@ -78,6 +78,40 @@ tags:
 
         mv nginx conf
 
-再來將前一個建置的容器停止運行並刪除，重新運行一個新的容器，這次不只映射了網頁目錄，還映射了設定目錄
+再來將前一個建置的容器停止運行並刪除，重新運行一個新的容器，這次不只映射了網頁目錄，還映射了設定檔
 
         docker run -d -p 7777:80 --name nginx-server -v "$PWD/html":/usr/share/nginx/html -v "$PWD/conf":/etc/nginx nginx
+#### 設定檔介紹
+安裝完Nginx後，原本的設定預設就已經配置妥當，所以能夠直接啟用服務，不過我們還是要了解Nginx是如何配置的
+
+主要設定檔在 nginx.conf
+
+    user  nginx;
+    worker_processes  1;
+
+    error_log  /var/log/nginx/error.log warn;
+    pid        /var/run/nginx.pid;
+
+    events {
+        worker_connections  1024;
+    }
+
+    http {
+        include       /etc/nginx/mime.types;
+        default_type  application/octet-stream;
+
+        log_format  main  '$remote_addr - $remote_user   [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+        access_log  /var/log/nginx/access.log  main;
+
+        sendfile        on;
+        #tcp_nopush     on;
+
+        keepalive_timeout  65;
+
+        #gzip  on;
+
+        include /etc/nginx/conf.d/*.conf;
+    }
