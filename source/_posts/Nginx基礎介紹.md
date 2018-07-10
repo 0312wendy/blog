@@ -85,33 +85,44 @@ tags:
 安裝完Nginx後，原本的設定預設就已經配置妥當，所以能夠直接啟用服務，不過我們還是要了解Nginx是如何配置的
 
 主要設定檔在 nginx.conf
-
+    
+    # 啟用程序的Linux帳戶   
     user  nginx;
-    worker_processes  1;
 
+    # 啟用的執行緒數量(建議CPU核心數 x 2)
+    worker_processes  2;
+    
+    # Error Log檔的位置
     error_log  /var/log/nginx/error.log warn;
     pid        /var/run/nginx.pid;
 
     events {
+        # 允許同一時間連線總數量
         worker_connections  1024;
     }
 
     http {
         include       /etc/nginx/mime.types;
         default_type  application/octet-stream;
-
+        
+        # 預設的log記錄格式
         log_format  main  '$remote_addr - $remote_user   [$time_local] "$request" '
                       '$status $body_bytes_sent "$http_referer" '
                       '"$http_user_agent" "$http_x_forwarded_for"';
-
+        
+        # Access log檔的位置
         access_log  /var/log/nginx/access.log  main;
 
         sendfile        on;
         #tcp_nopush     on;
 
         keepalive_timeout  65;
-
+        
+        # 預設不會自動啟動gzip壓縮
         #gzip  on;
-
+        
+        # 載入/etc/nginx/conf.d/下的所有設定檔
+        # 通常都是各個虛擬主機的配置
         include /etc/nginx/conf.d/*.conf;
     }
+
