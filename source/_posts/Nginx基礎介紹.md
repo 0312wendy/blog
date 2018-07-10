@@ -72,7 +72,7 @@ tags:
         docker cp nginx-server:/etc/nginx .
 執行完成後，會看到當前目錄底下多出一個nginx子目錄
 
-![](Nginx基礎介紹/nginx3.png)
+<img src="Nginx基礎介紹/nginx3.png" width="50%" height="50%">
 
 名稱改為conf以利日後辨識
 
