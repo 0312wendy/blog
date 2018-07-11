@@ -90,7 +90,7 @@ tags:
 
 主要設定檔在 nginx.conf
     
-    # 啟用程序的Linux帳戶   
+    # 啟用程序的Linux帳戶
     user  nginx;
 
     # 啟用的執行緒數量(建議CPU核心數 x 2)
@@ -124,7 +124,9 @@ tags:
         # 設定log檔的存放路徑
         access_log  /var/log/nginx/access.log  main;
 
+        #sendfile設定可提高Nginx靜態資源託管效率，它是一個系統調用，直接在內核空間完成文件發送，不需要先read再write
         sendfile        on;
+        #只有在啟用sendfile之後才生效。啟用之後，封包會累計到一定大小之後才會發送，減小額外發送，提高網路效率。
         #tcp_nopush     on;
 
         keepalive_timeout  65;
@@ -192,3 +194,59 @@ tags:
         #    deny  all;
         #}
     }
+#### Nginx建置多台虛擬主機
+虛擬主機（Virtual Host）用的是特殊的軟硬件技術，可以在一台Nginx主機上綁定多個網域，架設多個不同的網站，每台虛擬主機都可以是一個獨立的網站，具有獨立的域名及完整的Internet服務功能，利用虛擬主機，不需為每個要運行的網站提供一台獨立的Nginx伺服器。
+
+##### 虛擬主機配置
+到 /nginx-docker/conf/conf.d (本機映射到容器的路徑) 目錄底下新增 site1.conf 和 site2.conf 文件
+
+##### site1.conf
+    
+    server {
+    listen       81;
+    server_name  localhost;
+
+    #charset koi8-r;
+    #access_log  /var/log/nginx/host.access.log  main;
+
+    location / {
+        root   /etc/nginx/data/site1;
+        index  index.html index.htm;
+    }
+    }                ......(以下省略)
+
+##### site2.conf
+    
+    server {
+    listen       82;
+    server_name  localhost;
+
+    #charset koi8-r;
+    #access_log  /var/log/nginx/host.access.log  main;
+
+    location / {
+        root   /etc/nginx/data/site2;
+        index  index.html index.htm;
+    }
+    }                ......(以下省略)
+
+到 nginx-docker/conf/ (本機映射到容器裡的/etc/nginx/路徑)目錄底下新增 data 子目錄，在 /data/ 下分別建置site1和site2的文件夾，最後分別在文件夾裡建置 index.html 
+
+因為有修改到設定檔，需重新運行容器才會生效，因此我們要將原本的容器停止運行並刪除，重新再建一個容器
+
+切換到/nginx-docker/下。執行以下命令:
+
+    docker run -d -p 7777:80 -p 3001:81 -p 3002:82 --name nginx-server -v "$PWD/html":/usr/share/nginx/html -v "$PWD/conf":/etc/nginx nginx
+
+* 因新增2台虛擬主機設定的port為81、82，這裡需特別注意要新增指定本機與容器對應的port
+
+#### 測試
+查看容器是否運行成功
+
+     docker ps -a
+
+我們也可以進入容器查看指定的本機目錄是否有映射到容器裡
+
+     docker exec -ti 容器名稱 bash
+
+最後，到瀏覽器輸入http://10.9.66.16:3001 及 http://10.9.66.16:3002查看site1和site2下的兩個index.html是否正常顯示
