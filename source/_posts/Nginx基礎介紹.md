@@ -84,8 +84,7 @@ tags:
 #### 設定檔介紹
 安裝完Nginx後，原本的設定預設就已經配置妥當，所以能夠直接啟用服務，不過我們還是要了解Nginx是如何配置的
 
-在Nginx的設定檔中，分為:<font color=blue>指令</font>、<font color=green>模組</font>兩種內容，<font color=blue>指令</font>需要填入對應的參數及空格，最後面需以
-分號 ; 做結尾，<font color=green>模組</font>的部份則是以大括號{ }做區分，我們可以在{ }內部新增所需的指令與模組，進而擴充功能，Nginx程式註解的部分則使用 # 符號
+在Nginx的設定檔中，分為:<font color=blue>指令</font>、<font color=green>模組</font>兩種內容，<font color=blue>指令</font>需要填入對應的參數及空格，最後面需以分號 ; 做結尾，<font color=green>模組</font>的部份則是以大括號{ }做區分，我們可以在{ }內部新增所需的指令與模組，進而擴充功能，Nginx程式註解的部分則使用 # 符號
 
 基本的Nginx設定檔模組包含<font color=red>http、server、location</font>三個模組
 
@@ -99,6 +98,9 @@ tags:
     
     # Error Log檔的位置
     error_log  /var/log/nginx/error.log warn;
+    #log等級從低到高依序為 debug | info | notice | warn | error | crit
+    
+    #紀錄pid的文件
     pid        /var/run/nginx.pid;
 
     events {
@@ -110,12 +112,13 @@ tags:
         include       /etc/nginx/mime.types;
         default_type  application/octet-stream;
         
-        # 預設的log記錄格式
+        # 設定log記錄格式
+        # 語法:log_format name（格式名字） 格式樣式（想要得到什麼樣的log內容）
         log_format  main  '$remote_addr - $remote_user   [$time_local] "$request" '
                       '$status $body_bytes_sent "$http_referer" '
                       '"$http_user_agent" "$http_x_forwarded_for"';
         
-        # Access log檔的位置
+        # 設定log檔的存放路徑
         access_log  /var/log/nginx/access.log  main;
 
         sendfile        on;
