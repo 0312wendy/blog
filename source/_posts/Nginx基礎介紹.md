@@ -117,6 +117,9 @@ tags:
         log_format  main  '$remote_addr - $remote_user   [$time_local] "$request" '
                       '$status $body_bytes_sent "$http_referer" '
                       '"$http_user_agent" "$http_x_forwarded_for"';
+
+可設置的參數格式及說明如下：
+![](Nginx基礎介紹/log.jpg)
         
         # 設定log檔的存放路徑
         access_log  /var/log/nginx/access.log  main;
