@@ -73,7 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: hiker
+theme: cube
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -82,3 +82,14 @@ deploy:
   repo: git@github.com:0312wendy/0312wendy.github.io.git
   branch: master
   
+jsonContent:
+  pages:
+  title: true
+  text: true
+  path: true
+  preview: true
+posts:
+  title: true
+  text: true
+  path: true
+  preview: true
