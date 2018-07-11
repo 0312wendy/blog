@@ -238,7 +238,7 @@ tags:
 
     docker run -d -p 7777:80 -p 3001:81 -p 3002:82 --name nginx-server -v "$PWD/html":/usr/share/nginx/html -v "$PWD/conf":/etc/nginx nginx
 
-* 因新增2台虛擬主機設定的port為81、82，這裡需特別注意要新增指定本機與容器對應的port
+*<font color=red> 因新增2台虛擬主機設定的port為81、82，這裡需特別注意要新增指定本機與容器對應的port</font>
 
 #### 測試
 查看容器是否運行成功
@@ -249,6 +249,6 @@ tags:
 
      docker exec -ti 容器名稱 bash
 
-最後，到瀏覽器輸入http://10.9.66.16:3001 及 http://10.9.66.16:3002查看site1和site2下的兩個index.html是否正常顯示
+最後，到瀏覽器輸入http://10.9.66.16:3001 及 http://10.9.66.16:3002 查看site1和site2下的兩個index.html是否正常顯示
 
 ![](Nginx基礎介紹/site1.png)
