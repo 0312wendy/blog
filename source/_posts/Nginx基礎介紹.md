@@ -250,3 +250,5 @@ tags:
      docker exec -ti 容器名稱 bash
 
 最後，到瀏覽器輸入http://10.9.66.16:3001 及 http://10.9.66.16:3002查看site1和site2下的兩個index.html是否正常顯示
+
+![](Nginx基礎介紹/site1.png)
