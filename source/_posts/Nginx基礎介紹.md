@@ -3,7 +3,7 @@ title: Nginx基礎介紹
 date: 2018-07-08 11:55:28
 tags:
 ---
-#### 什麼是Nginx?<br>
+#### 什麼是Nginx?<br>  
 ##### HTTP伺服器
 作為HTTP伺服器，可以極快的速度為伺服器上的靜態文件（ex:HTML、圖片）通過HTTP協議展現給客戶端
 
