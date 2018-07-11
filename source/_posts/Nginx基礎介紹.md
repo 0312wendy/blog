@@ -5,7 +5,7 @@ tags:
 ---
 #### 什麼是Nginx?<br>  
 ##### HTTP伺服器
-作為HTTP伺服器，可以極快的速度為伺服器上的靜態文件（ex:HTML、圖片）通過HTTP協議展現給客戶端
+作為HTTP伺服器，可以極快的速度為伺服器上的靜態文件（ex:HTML、圖片）通過HTTP協議展現給客戶端。
 
 ##### 反向代理伺服器
 客戶端本來可以直接通過HTTP訪問某網站的應用伺服器，如果管理員在中間加上一個Nginx，客戶端會先請求Nginx，Nginx再請求應用伺服器，並將結果返回給客戶端，此時Nginx就是反向代理伺服器。
@@ -83,6 +83,11 @@ tags:
         docker run -d -p 7777:80 --name nginx-server -v "$PWD/html":/usr/share/nginx/html -v "$PWD/conf":/etc/nginx nginx
 #### 設定檔介紹
 安裝完Nginx後，原本的設定預設就已經配置妥當，所以能夠直接啟用服務，不過我們還是要了解Nginx是如何配置的
+
+在Nginx的設定檔中，分為:<font color=blue>指令</font>、<font color=green>模組</font>兩種內容，<font color=blue>指令</font>需要填入對應的參數及空格，最後面需以
+分號 ; 做結尾，<font color=green>模組</font>的部份則是以大括號{ }做區分，我們可以在{ }內部新增所需的指令與模組，進而擴充功能，Nginx程式註解的部分則使用 # 符號
+
+基本的Nginx設定檔模組包含<font color=red>http、server、location</font>三個模組
 
 主要設定檔在 nginx.conf
     
