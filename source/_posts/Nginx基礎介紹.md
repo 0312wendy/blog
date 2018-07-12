@@ -4,7 +4,7 @@ date: 2018-07-08 11:55:28
 tags:
 ---
 #### 什麼是Nginx?<br>  
-Nginx為一個網頁伺服器，它能反向代理HTTP,HTTPS,SMTP,POP3,IMAP的協定連接，以及設置Load balance和HTTP cache。
+Nginx為一個網頁伺服器，它能反向代理 HTTP, HTTPS, SMTP, POP3, IMAP的協定連接，以及設置Load balance和HTTP cache。
 ##### HTTP伺服器
 作為HTTP伺服器，可以極快的速度為伺服器上的靜態文件（ex:HTML、圖片）通過HTTP協議展現給客戶端。
 
