@@ -104,8 +104,13 @@ tags:
 
        docker run -p 3003:80 -d --name apache httpd
 
-2.
+2.對Apache預設主頁進行10000次的連接測試
+
        ab -c 1 -n 10000 http://127.0.0.1/index.html
+
+3.Apache平均每秒處理3000多筆請求
+
+![](Nginx基礎介紹/test2.png)
 
 
 
