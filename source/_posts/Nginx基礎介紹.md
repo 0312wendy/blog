@@ -81,6 +81,34 @@ tags:
 再來將前一個建置的容器停止運行並刪除，重新運行一個新的容器，這次不只映射了網頁目錄，還映射了設定檔
 
         docker run -d -p 7777:80 --name nginx-server -v "$PWD/html":/usr/share/nginx/html -v "$PWD/conf":/etc/nginx nginx
+
+
+#### 簡單壓力測試
+測試Nginx的性能(因我們安裝的Nginx服務為容器，以下命令要在Nginx容器使用)
+
+1.安裝ab命令
+       
+       apt-get install apache2-utils
+
+2.對Nginx預設主頁進行10000次的連接測試
+
+       ab -c 1 -n 10000 http://127.0.0.1/index.html
+
+3.可看到平均每秒處理4000多筆請求
+
+![](Nginx基礎介紹/test.png)
+
+#### 補充:與Apache的性能比較
+
+1.Docker安装Apache
+
+       docker run -p 3003:80 -d --name apache httpd
+
+2.
+       ab -c 1 -n 10000 http://127.0.0.1/index.html
+
+
+
 #### 設定檔介紹
 安裝完Nginx後，原本的設定預設就已經配置妥當，所以能夠直接啟用服務，不過我們還是要了解Nginx是如何配置的
 
